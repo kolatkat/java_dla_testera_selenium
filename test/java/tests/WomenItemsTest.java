@@ -4,6 +4,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.CategoryPage;
 import pages.PopularItemsPage;
 import pages.SearchResultsPage;
@@ -50,19 +51,16 @@ public class WomenItemsTest extends BaseTest {
         categoryPage.searchItem();
         List<String> names = searchResultsPage.getNameOfSearchItem();
 
-        for (String str : names) {
-            System.out.println(str);
-        }
+        String nameOfSearchingProduct = names.stream()
+                .filter(name -> name.equals("Printed Summer Dress"))
+                .findFirst()
+                .orElse("Na liście wyników brak szukanego produktu");
+
         Float prices = searchResultsPage.getPriceOfSearchItem();
 
-        System.out.println(prices);
+       Assertions.assertThat(prices).isEqualTo(28.98f);
+       Assertions.assertThat(nameOfSearchingProduct).isEqualTo("Printed Summer Dress");
+       Assertions.assertThat(searchResultsPage.getWhatWasTypedInFieldSearchQueryTop()).isEqualTo("\"PRINTED SUMMER DRESS\"");
 
-//        for (Float price : prices) {
-//            System.out.println(price);
-//        }
-
-
-       // Assertions.assertThat(searchResultsPage.getPriceOfSearchItem().floatValue())
-       // Assertions.assertThat(searchResultsPage.getPriceOfSearchItem().compareTo((float) 26.00));
     }
 }

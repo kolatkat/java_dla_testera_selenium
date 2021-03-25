@@ -19,12 +19,16 @@ public class CategoryPage extends BasePage {
     @FindBy(css = ".product_list.grid.row .product-name")
     WebElement nameOfSearchItem;
 
+    @FindBy(name = "submit_search")
+    WebElement submitSearch;
+
     public void clickOnWomenItems() {
         womenItems.click();
     }
 
     public void searchItem() {
-        searchQueryTop.sendKeys("Blouse");
+        searchQueryTop.sendKeys("Printed Summer Dress");
+        submitSearch.click();
     }
 
     public String getNameOfSearchItem() {
